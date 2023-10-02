@@ -30,6 +30,12 @@ func loadEnvs(answerCh AnswerEnvCh) {
 
 }
 
+func loadingVariablesIntoStruct[filledStruct EnvPostgres | EnvRabbitMQ](envs envAlias) filledStruct {
+	for key, value := range envs {
+
+	}
+}
+
 func loadPostgresEnv() {
 
 }
