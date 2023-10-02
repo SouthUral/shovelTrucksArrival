@@ -3,6 +3,7 @@ version: "3.8"
 services:
   rabbit_test_shoveltrucks:
     image: rabbitmq:3.13-rc-management
+    hostname: rabbit_test_shoveltrucks
     container_name: rabbit_test_shoveltrucks
     restart: always
     environment:
