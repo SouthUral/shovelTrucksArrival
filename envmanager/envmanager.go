@@ -31,22 +31,18 @@ func getEnv(key string) (string, error) {
 // Функция загружает переменные окружения для модулей Postgres и Rabbit.
 // В случае если какие-то переменные не загружены, будет сформирована ошибка
 func loadEnvs(answerCh AnswerEnvCh) {
-	var err interface{}
-
 	pgEnv, errPg := loadPostgresEnv()
 	rbEnv, errRb := loadRabbitEnv()
 
-	if errPg != nil || errRb != nil {
-		err = fmt.Errorf("не загружены env %s, %s", errPg, errRb)
-	} else {
-		err = nil
+	responce := AnswerEnv{
+		PostgresURL: pgEnv.getPostgresURL(),
+		RabbitURL:   rbEnv.getRabbitURL(),
 	}
 
-	responce := AnswerEnv{
-		PostgresURL = pgEnv.getPostgresURL(),
-		RabbitURL = rbEnv.getRabbitURL(),
-		Error = err,
+	if errPg != nil || errRb != nil {
+		responce.Error = fmt.Errorf("не загружены env %s, %s", errPg, errRb)
 	}
+
 	answerCh <- responce
 }
 
