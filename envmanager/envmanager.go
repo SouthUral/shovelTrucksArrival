@@ -83,7 +83,7 @@ func loadRabbitEnv() (envStorageStruct, error) {
 		"Port":     "ASD_RMQ_PORT",
 		"Login":    "ASD_RMQ_LOGIN",
 		"Password": "ASD_RMQ_PASSWORD",
-		"VHost":    "ASD_RMQ_HOST",
+		"VHost":    "ASD_RMQ_VHOST",
 	}
 	loadedEnvs, err := loadingEnvVar(envsAlias)
 	return loadedEnvs, err

@@ -24,6 +24,9 @@ func main() {
 
 	chEnv := env.InitLoadEnvs()
 	answer := <-chEnv
-	log.Info(answer)
-
+	log.Info(answer.PostgresURL)
+	log.Info(answer.RabbitURL)
+	if answer.Error != nil {
+		log.Error(answer.Error)
+	}
 }
