@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"time"
 
 	env "github.com/SouthUral/shovelTrucksArrival/envmanager"
 
@@ -21,9 +22,14 @@ func init() {
 
 func main() {
 	log.Info("Запуск сервиса")
+	start := time.Now()
 
 	chEnv := env.InitLoadEnvs()
 	answer := <-chEnv
+
+	timeStart := time.Since(start).Microseconds()
+
+	log.Info(timeStart)
 	log.Info(answer.PostgresURL)
 	log.Info(answer.RabbitURL)
 	if answer.Error != nil {

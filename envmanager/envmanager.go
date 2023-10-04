@@ -44,6 +44,7 @@ func loadEnvs(answerCh AnswerEnvCh) {
 	}
 
 	answerCh <- responce
+	close(answerCh)
 }
 
 func loadingEnvVar(fieldsAndAliasEnv envAlias) (envStorageStruct, error) {
