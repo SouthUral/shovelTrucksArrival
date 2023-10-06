@@ -5,6 +5,7 @@ import (
 	"time"
 
 	env "github.com/SouthUral/shovelTrucksArrival/envmanager"
+	rb "github.com/SouthUral/shovelTrucksArrival/rabbit"
 
 	log "github.com/sirupsen/logrus"
 )
@@ -22,17 +23,21 @@ func init() {
 
 func main() {
 	log.Info("Запуск сервиса")
-	start := time.Now()
+	// start := time.Now()
 
 	chEnv := env.InitLoadEnvs()
 	answer := <-chEnv
 
-	timeStart := time.Since(start).Microseconds()
+	go rb.Publisher(answer.RabbitURL, "TestExchange", "TestQueue")
+	go rb.Consumer(answer.RabbitURL, "TestQueue", "Basic_consumer")
 
-	log.Info(timeStart)
-	log.Info(answer.PostgresURL)
-	log.Info(answer.RabbitURL)
+	// timeStart := time.Since(start).Microseconds()
+
+	// log.Info(timeStart)
+
 	if answer.Error != nil {
 		log.Error(answer.Error)
 	}
+
+	time.Sleep(time.Duration(100) * time.Second)
 }
