@@ -42,6 +42,21 @@ func declaringQueue(rabbitChan *amqp.Channel, nameQueue string) (amqp.Queue, err
 	return queue, err
 }
 
+// Метод для bindig очереди к exchange
+func bindingQueue(rabbitChan *amqp.Channel, nameQueue, nameExchange, routingKey string) error {
+	err := rabbitChan.QueueBind(
+		nameQueue,    // queue name
+		routingKey,   // routing key
+		nameExchange, // name exchange
+		false,        // noWait
+		nil,
+	)
+	if err != nil {
+		log.Errorf("Ошибка binding очереди %s, к exchange %s : %s", nameQueue, nameExchange, err.Error())
+	}
+	return err
+}
+
 // Метод для создания Exchange
 func declaringExchange(rabbitChan *amqp.Channel, nameExchange string) error {
 	err := rabbitChan.ExchangeDeclare(
